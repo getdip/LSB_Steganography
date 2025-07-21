@@ -137,7 +137,7 @@ if(open_files(encInfo)== e_success)
 
             printf("Copied Header successfully\n");
 
-            if(encode_magic_string(MAGIC_STRING,encInfo) == e_success)
+            if(encode_magic_string(MAGIC_STRING_EN,encInfo) == e_success)
             
             {
                     printf("Magic string encoded successfully\n");
