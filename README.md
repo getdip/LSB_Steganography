@@ -42,7 +42,11 @@ With above decoded informations the Output.txt is created.
 
 # Build process and 'make' commands  
 
-**Ensure you have gcc(GNU compiler collection) installed on your system**  
+REQUIREMENTS
+
+**1) C compiler (gcc)**  
+**2) Make**
+
 
 EXECUTE THE BELOW COMMAND TO PRODUCE THE EXECUTABLE 
 >**make**  
@@ -64,10 +68,6 @@ HOW TO CLEAN
 
 This command removes all intermediate files along wtih user given files as per INFILE=<filename_with_extension> and OUTFILE=<output_filename_with_extension>  
 
-# Requirements
-
-**1) C compiler (gcc)**  
-**2) Make**
 
 
  
