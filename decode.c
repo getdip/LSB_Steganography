@@ -151,7 +151,16 @@ Status decode_magic_string(DecodeInfo *decInfo)
 
 {
     char ch;
-    char magic_string[2]={0x00,0x00};
+    char magic_string[3]={0x00,0x00,0x00};
+    magic_string[2]='\0';
+    char user_key[10];
+
+    /*User input for the key*/
+    printf("Enter the key: ");
+    fgets(user_key,10,stdin);
+    user_key[strlen(user_key)-1]='\0';
+    /*****************************/
+
     fseek(decInfo->fptr_stego_image,54,SEEK_SET);
 
     for(int i=0;i<8;i++){
@@ -164,12 +173,11 @@ Status decode_magic_string(DecodeInfo *decInfo)
         magic_string[1] = magic_string[1] | (ch & 0x01)<<(7-i);
     }
 
-    printf("Magic string is %s\n",magic_string);
-
-    if (strcmp(magic_string,MAGIC_STRING) == 0)
-    
-    {
+    if (strcmp(magic_string,user_key) == 0){
         return e_success;
+    }
+    else{
+        return e_failure;
     }
 }
 
@@ -278,5 +286,3 @@ Status decode_secret_data(DecodeInfo *decInfo)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
