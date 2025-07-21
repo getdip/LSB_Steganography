@@ -84,51 +84,31 @@ Status read_and_validate_encode_args(char *argv[], EncodeInfo *encInfo)
 
 {
 
-if  ( (argv[2] != NULL) && (strcmp (strstr(argv[2],"."),".bmp")  == 0))
-{
+    if  ( (argv[2] != NULL) && (strcmp (strstr(argv[2],"."),".bmp")  == 0)){
+        encInfo ->src_image_fname = argv[2];
+    }
 
-     encInfo ->src_image_fname = argv[2];
-}
+    else{
+        return e_failure;
+    }
 
-else
-{
+    if  ( (argv[3] != NULL) && (strcmp (strstr(argv[3],"."),".txt")  == 0)){
+        encInfo ->secret_fname = argv[3];
+    }
 
-    return e_failure;
+    else{
+        return e_failure;
+    }
 
-}
+    if  ( argv[4] != NULL){
+        encInfo ->stego_image_fname = argv[4];
+    }
 
+    else{
+        encInfo ->stego_image_fname = "stego_image.bmp";
+    }
 
-if  ( (argv[3] != NULL) && (strcmp (strstr(argv[3],"."),".txt")  == 0))
-{
-
-     encInfo ->secret_fname = argv[3];
-}
-
-else
-{
-
-    return e_failure;
-
-}
-
-
-if  ( argv[4] != NULL)
-{
-
-     encInfo ->stego_image_fname = argv[4];
-}
-
-else
-{
-
-    encInfo ->stego_image_fname = "stego_image.bmp";
-
-}
-
-
-return e_success;
-
-
+    return e_success;
 }
 
 
@@ -194,31 +174,25 @@ if(open_files(encInfo)== e_success)
                                             printf("Copied rest of the RGB dta from source to output file\n");
 
                                         }
-
                                         else
                                         {
 
                                             printf("Unable to display the output image\n");
                                         }
-
                                     }
                                     else    
-
                                     {
 
                                         printf("Failed to encode Secret data\n");
                                         return e_failure;
                                     }
-
                                 }
-
                                 else
                                 {
                                     printf("Failes to encode secret file size\n");
                                     return e_failure;
                                 }
                             }
-
                             else{
 
                                 printf("failed to encode secret file extension\n");
@@ -226,44 +200,32 @@ if(open_files(encInfo)== e_success)
                                 return e_failure;
                             }
                     }
-
                     else
-                    
                     {
-
                         printf("Failes to encode secret file extension size\n");
 
                         return e_failure;
-
                     }
-
             }
-
             else
             {
-
                 printf("Failed to encode the magic string\n");
             }
         }
-
         else
         {
             printf("Failed to copy the heade from source image\n");
             return e_failure;
         }
     }
-
     else
     {
-
         printf("Image file size is not adequate\n");
         return e_failure;
     }
 }
-
 else
 {
-
     printf("Failed to open the files\n");
     return e_failure;
 }
@@ -279,36 +241,25 @@ return e_success;
 uint get_file_size(FILE *fptr)             ///////////  Returns Size of the SECRET FILE in BYTES 
 
 {
-
     fseek(fptr, 0,SEEK_END);
     
     return ftell(fptr); 
-
-
 }
-
 
 Status check_capacity(EncodeInfo *encInfo)
 
 {
-
     //Size of input .bmp file
-
     encInfo ->image_capacity = get_image_size_for_bmp(encInfo->fptr_src_image);
 
     // size of the secret file
-
     encInfo ->size_secret_file = get_file_size(encInfo->fptr_secret);
 
-    if( encInfo->image_capacity > ((54 + 2 + 4 + 4 + 4 + encInfo->size_secret_file)*8))  
-    {
-
+    if( encInfo->image_capacity > ((54 + 2 + 4 + 4 + 4 + encInfo->size_secret_file)*8)){  //First 54 bytes are metadata of the image file
         return e_success;
     }
-
     else
     {
-
         e_failure;
     }
     
@@ -317,13 +268,9 @@ Status check_capacity(EncodeInfo *encInfo)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////// copy bmp header implementation ////////////////////////////////////////////////////////////////
-
-
-
 Status copy_bmp_header(FILE *fptr_src, FILE *fptr_dest)       ///// FIRST 54 BYTES OF A THE IMAGE FILE SHOULD BE COPIED AS IT IS
 
 {
-
     char header[54];
 
     //ALWAYS RESET THE FILE POINTER OF A FILE
@@ -333,27 +280,20 @@ Status copy_bmp_header(FILE *fptr_src, FILE *fptr_dest)       ///// FIRST 54 BYT
     fwrite(header,sizeof(char),54,fptr_dest);
     
     return e_success;
-
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////   Magic String Encoding ////////////////////////////////////////////
 
 Status encode_magic_string(char *s, EncodeInfo *encInfo)
 {
-
     encode_data_to_image(s, strlen(s),encInfo);     // calling encode_to_data function
-    
     return e_success;
-
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 ///////////////////////////////////////////// Data - TO -Image encoding implemetation   //////////////////////////////////////////////
 
@@ -370,22 +310,17 @@ Status encode_data_to_image(char *data, int s  ,EncodeInfo *encInfo)
         fread(encInfo->image_data,sizeof(char),8,encInfo->fptr_src_image);
         encode_byte_to_lsb(data[i],encInfo->image_data);
         fwrite(encInfo->image_data,sizeof(char),8,encInfo->fptr_stego_image);
-        
-
     }
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
 ///////////////////////////////          Encode_byte_to_lsb       /////////////////////////////////////////////////////////////
 
 Status encode_byte_to_lsb(char data, char *image_buffer)
 
 {
-
     unsigned int mask = 1 << 7;
 
 for(int i=0;i<8;i++)
@@ -394,30 +329,21 @@ for(int i=0;i<8;i++)
     image_buffer[i] = (image_buffer[i] & 0xFE) | ((data & mask) >> (7-i));
 
     mask = mask >> 1;
-
 }
 
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-///////////////////////////////// Secret file extension SIZE ENCODING ////////////////////////////////////////
+///////////////////////////////// Secret file extension SIZE ENCODING /////////////////////////////////////////////////////////////
 
 Status encode_size(int size, FILE *fptr_src, FILE *fptr_stego)
 
 {
-
     char str[32];
-
     fread(str,sizeof(char),32,fptr_src);
-
     encode_size_to_lsb(str,size);
-    
     fwrite(str,sizeof(char),32,fptr_stego);
-
     return e_success;
 }
 
@@ -425,107 +351,74 @@ Status encode_size(int size, FILE *fptr_src, FILE *fptr_stego)
 
 ////////////////////////////        Encode_size_to_lsb Implemetation        ////////////////////////////////////////////////////
 
-Status encode_size_to_lsb(char *ch, int s)
+Status encode_size_to_lsb(char *ch, int s){
+    unsigned int mask = 1 << 31;
 
-{
+    for(int i=0;i<32;i++){
+        ch[i] = (ch[i] & 0xFE) | ((s & mask) >> (31-i));
 
-unsigned int mask = 1 << 31;
-
-for(int i=0;i<32;i++)
-{
-
-    ch[i] = (ch[i] & 0xFE) | ((s & mask) >> (31-i));
-
-    mask = mask >> 1;
-
-}
-
+        mask = mask >> 1;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 ////////////////////////////////        ENcode secret File Extension     ////////////////////////////////////////////////////////
 
+Status encode_secret_file_extn( char *file_extn, EncodeInfo *encInfo){
 
-Status encode_secret_file_extn( char *file_extn, EncodeInfo *encInfo)
-
-{
-
-file_extn = ".txt";
-
-encode_data_to_image(file_extn,strlen(file_extn), encInfo);
-
-return e_success;
-
+    file_extn = ".txt";
+    encode_data_to_image(file_extn,strlen(file_extn), encInfo);
+    return e_success;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////    Encoding secret file size       ////////////////////////////////////////////////////
 
-////////////////////////////////////////////////    Encoding secret file size       //////////////////////////////////////////////
-
-Status encode_secret_file_size(long int  file_size, EncodeInfo *encInfo)
-
-{
-
-    char str[32];
-
-    fread(str,sizeof(char),32,encInfo->fptr_src_image);
-
-    encode_size_to_lsb(str,file_size);
+Status encode_secret_file_size(long int  file_size, EncodeInfo *encInfo){
     
+    char str[32];
+    fread(str,sizeof(char),32,encInfo->fptr_src_image);
+    encode_size_to_lsb(str,file_size);
     fwrite(str,sizeof(char),32,encInfo->fptr_stego_image);
-
     return e_success;
-
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 ////////////////////////////        Encode secret data content to image    //////////////////////////////////////////////////////
 
-Status encode_secret_file_data(EncodeInfo *encInfo)
-
-{
-
+Status encode_secret_file_data(EncodeInfo *encInfo){
+    
     char ch;
 
     //bring the file pointer to the start of the secret.txt
-
     fseek(encInfo->fptr_secret,0,SEEK_SET);
 
     for(int i =0 ; i<encInfo ->size_secret_file;i++)
     {
         //read 8byte of RGB data from the beautiful.bmp file
         fread(encInfo->image_data,sizeof(char),8,encInfo->fptr_src_image);
-        
+
         //read a character from the secret file
         fread(&ch,sizeof(char),1,encInfo->fptr_secret);
         encode_byte_to_lsb(ch,encInfo->image_data);
         fwrite(encInfo->image_data,sizeof(char),8,encInfo->fptr_stego_image);
     }
-
     return e_success;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
 /////////////////////////////////////      Copying remaining data from src to output Image      //////////////////////////////////////       
 
-Status copy_remaining_img_data(FILE *fptr_src, FILE *fptr_dest)
-
-{
+Status copy_remaining_img_data(FILE *fptr_src, FILE *fptr_dest){
+    
     char ch;
-
     while(fread(&ch,1,1,fptr_src)>0)
     {
         fwrite(&ch,1,1,fptr_dest);
     }
-
     return e_success;
 }
