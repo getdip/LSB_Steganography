@@ -66,8 +66,8 @@ This command removes all intermediate files along wtih user given files as per I
 
 # Requirements
 
-**1)C compiler (gcc)**  
-**2)Make**
+**1) C compiler (gcc)**  
+**2) Make**
 
 
  
