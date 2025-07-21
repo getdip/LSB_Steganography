@@ -1,6 +1,6 @@
 # LSB_Steganography
 
- Stenographical methods to hide files in images written in C programming language. 
+ Steganographic methods to hide files in images written in C programming language. 
 
 Plain simple text hidden within an image.
 
