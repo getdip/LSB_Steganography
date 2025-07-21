@@ -19,13 +19,13 @@ Although the whole idea of steganography is to hide the content of the secret fi
 
 **ENCODING BYTE ORDER (in the encoded image file)**
 
-a) 54 bytes of header (Metadata)
-b) Magic-string bytes
-c) Extension string's length bytes
-d) Extension string bytes
-e) Secret message file bytes
-f) Secret message file data size bytes
-g) Copy rest of input image file bytes to encoded image file bytes
+a) 54 bytes of header (Metadata)  
+b) Magic-string bytes  
+c) Extension string's length bytes  
+d) Extension string bytes  
+e) Secret message file bytes  
+f) Secret message file data size bytes  
+g) Copy rest of input image file bytes to encoded image file bytes  
 
 # Decoding
 
