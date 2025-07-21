@@ -42,7 +42,7 @@ With above decoded informations the Output.txt is created.
 
 # Build process and 'make' commands  
 
-**Ensure you have gcc(GNU compiler collection) installed on your system  
+**Ensure you have gcc(GNU compiler collection) installed on your system**  
 
 EXECUTE THE BELOW COMMAND TO PRODUCE THE EXECUTABLE 
 >**make**  
