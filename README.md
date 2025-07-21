@@ -31,11 +31,11 @@ g) Copy rest of input image file bytes to encoded image file bytes
 
 With the data of the encoded image as per the ENCODING BYTE ORDER, the following steps are executed
 
-a) Skip first 54 bytes of metadata, from next byte onwards decode for the magic string. If it matches, decode futher otherwise terminate
-b) Decode the output file extension string length bytes
-c) Decode the output file extension string bytes
-e) Decode the secret file content bytes
-f) Decode the secret file size bytes
+a) Skip first 54 bytes of metadata, from next byte onwards decode for the magic string. If it matches, decode futher otherwise terminate  
+b) Decode the output file extension string length bytes  
+c) Decode the output file extension string bytes  
+e) Decode the secret file content bytes  
+f) Decode the secret file size bytes  
 
 With above decoded informations the Output.txt is created.
 
