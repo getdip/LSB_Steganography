@@ -43,17 +43,17 @@ With above decoded informations the Output.txt is created.
 # Build process and 'make' commands  
 
 EXECUTE THE BELOW COMMAND TO PRODUCE THE EXECUTABLE 
->**make**
+>**make**  
 
 HOW TO ENCODE  
->**make ENCODE INFILE=<secret_filename_with_extension>**
+>**make ENCODE INFILE=<secret_filename_with_extension>**  
 
-Note: if no <secret_filename_with_extension> is passed to INFILE variable the default **secret.txt** will be the <secret_filename_with_extension>  
+Note: Default value passed to INFILE variable is **secret.txt**    
 
 HOW TO DECODE  
->**make DECODE OUTFILE=<output_filename_with_extension>**
+>**make DECODE OUTFILE=<output_filename_with_extension>**  
 
-Note: If no <output_filename_with_extension> is passed to OUTFILE variable the default **Output.txt** will be the <output_filename_with_extension>  
+Note: Default value passed to OUTFILE variable is **secret.txt** **Output.txt**   
 User have to enter the key i.e the magic-string(refer to the **encode.h**)  
 On successfull authentication, an Output.txt is created.  
 
