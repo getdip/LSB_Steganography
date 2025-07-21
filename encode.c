@@ -92,7 +92,7 @@ Status read_and_validate_encode_args(char *argv[], EncodeInfo *encInfo)
         return e_failure;
     }
 
-    if  ( (argv[3] != NULL) && (strcmp (strstr(argv[3],"."),".txt")  == 0)){
+    if  ( (argv[3] != NULL)){
         encInfo ->secret_fname = argv[3];
     }
 
@@ -301,7 +301,6 @@ Status encode_magic_string(char *s, EncodeInfo *encInfo)
 Status encode_data_to_image(char *data, int s  ,EncodeInfo *encInfo)
 
 {
-
     //calling encode_byte_to_lsb to encode the character
     //fetch 8bytes of RGB data for the s number of times i.e 8*s total RGB byte data
 
