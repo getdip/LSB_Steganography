@@ -53,12 +53,12 @@ Note: Default value passed to INFILE variable is **secret.txt**
 HOW TO DECODE  
 >**make DECODE OUTFILE=<output_filename_with_extension>**  
 
-Note: Default value passed to OUTFILE variable is **secret.txt** **Output.txt**   
+Note: Default value passed to OUTFILE variable is **Output.txt**   
 User have to enter the key i.e the magic-string(refer to the **encode.h**)  
 On successfull authentication, an Output.txt is created.  
 
 HOW TO CLEAN  
->**make clean**
+>**make clean**  
 
 This command removes all intermediate files along wtih user given files as per INFILE=<filename_with_extension> and OUTFILE=<output_filename_with_extension>  
 
