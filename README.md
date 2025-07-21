@@ -15,6 +15,5 @@ A byte of data is fetched from the **secret.txt** file, lets name this byte as *
 
 Following this pattern, each and every bytes of the text file **secret.txt** is encoded.
 
-
-
+Although the whole idea of steganography is to hide the content of the secret file, but in order to produce the output file we need to encode the input file **extension** and **extension string's length**. Apart from these encodings, a magic string is also encoded in the encoded image. This **magic string** acts as a layer of authetication, which must be encoded at the very begining followed by **extension**, **extension string's length** and then the actual content of the secret message file **secret.txt**.
 
